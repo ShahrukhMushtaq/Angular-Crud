@@ -6,26 +6,26 @@
       <h2>Enter Data</h2>
 
       <div class="container">
-      <form class="form-inline">
+      <form class="form-inline" #crudForm="ngForm" (ngSubmit)="onSubmit(crudForm)">
       
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" [(ngModel)]="stud.name">
+            <input class="form-control" id="name" name="name" #name="ngModel" [(ngModel)]="crudService.currDetail.name" placeholder="Enter Your Name">
         </div>
 
         <div class="form-group">
             <label for="seat">Seat</label>
-            <input type="text" class="form-control" id="seat" name="seat" [(ngModel)]="stud.seat">
+            <input class="form-control" id="seat" name="seat" #name="ngModel" [(ngModel)]="crudService.currDetail.seat" placeholder="Enter Your Seat">
         </div>
 
         <div class="form-group">
             <label for="class">Class</label>
-            <input type="text" class="form-control" id="class" name="class" [(ngModel)]="stud.class">
+            <input type="text" class="form-control" id="class" name="clas" #name="ngModel" [(ngModel)]="crudService.currDetail.clas" placeholder="Enter Your Class">
         </div>
 
         <div class="form-group">
             <label for="year">Year</label>
-            <input type="text" class="form-control" id="year" name="year" [(ngModel)]="stud.year">
+            <input type="text" class="form-control" id="year" name="year" #name="ngModel" [(ngModel)]="crudService.currDetail.year" placeholder="Enter Your Year">
         </div>
 
         <div class="form-group">

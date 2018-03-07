@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
+import { CrudService } from "./fol/crud.service";
+import { NgForm } from "@angular/forms";
+import { AngularFireList } from "angularfire2/database";
+import { Crud } from "./fol/crud";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [CrudService]
 })
-export class AppComponent {
+export class AppComponent  {
   title = 'Angular CRUD APPLICATION';
 students = [
 {name:"Arslan",seat:"EP-1449110",class:"BSCS",year:"4rth"},
@@ -15,7 +20,17 @@ students = [
 {name:"Shahrukh",seat:"EP-1449099",class:"BSCS",year:"4rth"},
 
 ];
+constructor(private crudService : CrudService){}
 
+ngOnInit(){
+  this.crudService.getData();
+}
+
+onSubmit(form : NgForm){
+
+  this.crudService.insertEmployee(form.value);
+  
+}
 stud:any={};
 stud1:any={};
 
