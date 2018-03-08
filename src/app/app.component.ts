@@ -3,6 +3,7 @@ import { CrudService } from "./fol/crud.service";
 import { NgForm } from "@angular/forms";
 import { AngularFireList } from "angularfire2/database";
 import { Crud } from "./fol/crud";
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-root',
@@ -13,24 +14,47 @@ import { Crud } from "./fol/crud";
 export class AppComponent  {
   title = 'Angular CRUD APPLICATION';
 students = [
-{name:"Arslan",seat:"EP-1449110",class:"BSCS",year:"4rth"},
-{name:"Awais",seat:"EP-1449021",class:"BSCS",year:"4rth"},
-{name:"Hamza",seat:"EP-1449032",class:"BSCS",year:"4rth"},
-{name:"Hidayat",seat:"EP-1449037",class:"BSCS",year:"4rth"},
-{name:"Shahrukh",seat:"EP-1449099",class:"BSCS",year:"4rth"},
+// {name:"Arslan",seat:"EP-1449110",class:"BSCS",year:"4rth"},
+// {name:"Awais",seat:"EP-1449021",class:"BSCS",year:"4rth"},
+// {name:"Hamza",seat:"EP-1449032",class:"BSCS",year:"4rth"},
+// {name:"Hidayat",seat:"EP-1449037",class:"BSCS",year:"4rth"},
+// {name:"Shahrukh",seat:"EP-1449099",class:"BSCS",year:"4rth"},
 
 ];
+crdlist : Crud[];
 constructor(private crudService : CrudService){}
 
 ngOnInit(){
-  this.crudService.getData();
+  var i = this.crudService.getData();
+  i.snapshotChanges().subscribe(item =>{
+    this.crdlist = [];
+    item.forEach(element =>{
+      var j = element.payload.toJSON();
+      j["key"] = element.key;
+      this.crdlist.push(j as Crud);
+    })
+  });
+  this.resetForm();
 }
 
 onSubmit(form : NgForm){
 
   this.crudService.insertEmployee(form.value);
-  
+  this.resetForm(form);  
 }
+
+resetForm(form? : NgForm){
+  if(form != null)
+  form.reset();
+  this.crudService.currDetail = {
+    $key : '',
+    name : '',
+    seat : '',
+    clas : '',
+    year : 0,
+  }
+}
+
 stud:any={};
 stud1:any={};
 
